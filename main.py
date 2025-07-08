@@ -8,6 +8,7 @@ id_count = 1
 # adiciona um treco na lista
 # edita um treco na lista por id
 # deleta um treco na lista por id
+
 app = Flask(__name__)
 
 @app.get("/lista/all")
@@ -28,6 +29,7 @@ def mais_um_por_favor():
 
     if not data.get("name") or not data.get("age"):
         return {"error": "não seja ganancioso"}
+    global id_count
     id_count += 1
     item_lista = {
         "id": id_count,
@@ -57,3 +59,16 @@ def edita_negocinho(edit_id: int):
 
     lista[edit_id - 1] = editar_item
     return {"msg": "deu."}
+
+@app.delete("/lista/delete/<int:delete_id>")
+def tacos(delete_id: int):
+    index_to_delete = -1
+    for k, v in enumerate(lista):
+        if int(v["id"]) == delete_id:
+            index_to_delete = k
+    
+    if index_to_delete != -1:
+        lista.pop(index_to_delete)
+        return {"msg": "A Terça do Taco é hoje!!! (mesmo sendo uma sexta-feira)"}
+    
+    return {"error": "você não é um Mestre Construtor >:("}
