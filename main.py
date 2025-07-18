@@ -11,6 +11,8 @@ id_count = 1
 
 app = Flask(__name__)
 
+app.run(debug=True)
+
 @app.get("/lista/all")
 def devolte_tudinho():
     return {"lista": lista}
