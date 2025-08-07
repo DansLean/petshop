@@ -1,17 +1,11 @@
 from flask import Flask, request, jsonify
+import os
 
 lista = [{"id": 1, "name": "Peter", "age": 22}, ]
 id_count = 1
 
-# mostra todos os elementos da lista
-# mostra um elemento da lista por id
-# adiciona um treco na lista
-# edita um treco na lista por id
-# deleta um treco na lista por id
-
 app = Flask(__name__)
 
-app.run(debug=True)
 
 @app.get("/lista/all")
 def devolte_tudinho():
@@ -41,7 +35,6 @@ def mais_um_por_favor():
 
     lista.append(item_lista)
     return jsonify({"msg": "o bom filho a casa torna (transforma viu senhor guilherme)", "item_lista": item_lista}), 200
-    # return {"msg": "", item_lista}
 
 @app.put("/lista/edit/<int:edit_id>")
 def edita_negocinho(edit_id: int):
@@ -74,3 +67,5 @@ def tacos(delete_id: int):
         return {"msg": "A Terça do Taco é hoje!!! (mesmo sendo uma sexta-feira)"}
     
     return {"error": "você não é um Mestre Construtor >:("}
+
+app.run("0.0.0.0", os.getenv("PORT", 8000), debug=True)
